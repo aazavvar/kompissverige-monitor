@@ -22,7 +22,8 @@ def get_events():
         text = item.get_text(strip=True)
         if link and "/aktiviteter/" in link and text:
             full_link = "https://www.kompissverige.se" + link
-            events.append({"title": text, "link": full_link})
+            if "Göteborg" in text:  # فقط ایونت‌های Göteborg
+                events.append({"title": text, "link": full_link})
     return events
 
 def load_old_events():
@@ -45,7 +46,7 @@ def send_email(new_events):
 
     body = "\n\n".join([f"{e['title']}\n{e['link']}" for e in new_events])
     msg = MIMEText(body)
-    msg["Subject"] = f"{len(new_events)} New Event(s) Added!"
+    msg["Subject"] = f"{len(new_events)} New Event(s) in Göteborg!"
     msg["From"] = sender
     msg["To"] = receiver
 
