@@ -26,11 +26,10 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         run: python monitor.py
 
-      # Commit & push امن با Action آماده
-      - name: Commit updated events
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update events
-          file_pattern: events.json
-          branch: main
-          push: true
+      - name: Commit and push events.json
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add events.json
+          git diff-index --quiet HEAD || git commit -m "Update events"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
