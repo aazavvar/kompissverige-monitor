@@ -21,9 +21,7 @@ jobs:
         run: pip install requests beautifulsoup4
 
       - name: Run monitor script
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+
         run: timeout 60 python monitor.py
 
       - name: Commit and push events.json
